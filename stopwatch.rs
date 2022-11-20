@@ -35,29 +35,6 @@ static mut glb_stylecolor:Rgb565= Rgb565::BLACK;
 static mut G_START:bool=false;
  static mut i2:usize=0;
 
-fn extract1(num:i32) ->i32{
-    num%100
-}
-
-fn extract2(num:i32) ->i32{
-    num%60
-}
-
-fn extract3(num:i32) ->i32{
-   ( num/60)%60
-}
-
-fn extract4(num:i32) ->i32{
-    ( num/60/60)%24
-}
-
-fn extractfirst(num:i32) ->i32{
-    num%10
-}
-
-fn extractsecond(num:i32) ->i32{
-    num/10%10
-}
 
 const FERRIS: &[u8] = include_bytes!("ferris.raw");
 
@@ -169,6 +146,16 @@ unsafe{
     if pstate.unwrap(){
             G_START=!G_START;
         }
+
+        Text::new(digit[(((pstate.unwrap() as usize)/1)%10)], Point::new(40, 50), style)
+        .draw(&mut lcd)
+        .unwrap();
+        
+       
+
+
+
+
         Text::new(digit[((i2)/60/60%24)%10], Point::new(100, 50), style)
         .draw(&mut lcd)
         .unwrap();
