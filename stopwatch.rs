@@ -146,7 +146,7 @@ unsafe{
     if pstate.unwrap(){
             G_START=!G_START;
         }
-
+ 
         Text::new(digit[(((pstate.unwrap() as usize)/1)%10)], Point::new(40, 50), style)
         .draw(&mut lcd)
         .unwrap();
