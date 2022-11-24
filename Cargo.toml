@@ -1,13 +1,13 @@
 [package]
 name = "longan-nano"
 version = "0.3.0"
-authors = ["Vadim Kaushan <admin@disasm.info>"]
-repository = "https://github.com/riscv-rust/longan-nano"
+authors = ["mk"]
+repository = "https://github.com/Valentin4869/LonganNanoStopwatch"
 categories = ["embedded", "hardware-support", "no-std"]
 description = "Board support package for the Longan Nano board"
 keywords = ["riscv", "gd32", "bsp"]
 license = "ISC"
-edition = "2018"
+edition = "2022"
 
 [package.metadata.docs.rs]
 features = ['lcd']
