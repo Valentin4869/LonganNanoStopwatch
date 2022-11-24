@@ -106,22 +106,22 @@ fn main() -> ! {
     let mut delay = McycleDelay::new(&rcu.clocks);
     let mut ip = 0;
     let mut adelay = 0;
-    let mut hdelay:[i32;3]=[0,0,0];
-    let mut i_hd=0;
+    let mut hdelay:i32=0;
+    let mut i_hd=2;
+    let mut bool_drawbg:bool=false;
+    let mut bool_updatebg:bool=false;
     //Draw background
-    unsafe {
-        Rectangle::new(Point::new(0, 0), Size::new(width as u32, height as u32))
-            .into_styled(PrimitiveStyle::with_fill(G_COLOR))
-            .draw(&mut lcd)
-            .unwrap();
-    }
+    
+ 
+    
 
     let raw_image: ImageRaw<Rgb565, LittleEndian> = ImageRaw::new(&FERRIS, 86);
 
-
-    Image::new(&raw_image, Point::new(0, 0))
-        .draw(&mut lcd)
-        .unwrap();
+   // if(bool_drawbg){
+    //Image::new(&raw_image, Point::new(0, 0))
+     //   .draw(&mut lcd)
+      //  .unwrap();
+    //}
 
     let mut i1 = 0;
 
@@ -129,7 +129,7 @@ fn main() -> ! {
     let mut pstate = rx.is_high();
     let mut local_c2: usize = 0;
     let mut pstate_bool: bool;
-
+    
     loop {
         i1 += 1;
 
@@ -146,7 +146,6 @@ fn main() -> ! {
 
         //fill adelay
         adelay+=1;
-        hdelay[i_hd]+=1;
         if adelay>500{
             
             unsafe { G_C2 = 0 };
@@ -160,30 +159,75 @@ fn main() -> ! {
        }
        else{
         //button is not down
-        if adelay>2 && adelay <500{
-            unsafe {
-                G_START = !G_START;
+            //button was just released
+            if adelay>2 && adelay <500{
+                unsafe {
+                    G_START = !G_START;
+                }
+                i_style += 1;
+                style = styles[(i_style) % 2 as usize];
+
+                
+
+                //quickpress check
+                if  hdelay>0{ 
+                    
+                    if i_hd<=0{
+                    
+                    
+                        bool_drawbg=!bool_drawbg;
+                        bool_updatebg=true;
+                        i_hd=2;
+                    }  
+                    
+                }
+                hdelay=68;
+                i_hd-=1;
+                adelay=0;
+                
             }
-            i_style += 1;
-            style = styles[(i_style) % 2 as usize];
+            //button was held, postprocessing'
+            else if adelay>500{
+                unsafe {
+                    G_START = false;
+                }
+            
 
-            adelay=0;
-        }
-
-        if adelay>500{
-            unsafe {
-                G_START = false;
+                adelay=0;
             }
-           
+            // other
+            else{
+                if hdelay>0{
+                hdelay-=1;
+                
+                }
+                else {
+                    i_hd=2;
+                }
+            }        //3button check
 
-            adelay=0;
-        }
         
        }
 
        unsafe {
         local_c2 = G_C2;
     }
+
+    if(bool_updatebg){
+        Rectangle::new(Point::new(0, 0), Size::new(width as u32, height as u32))
+        .into_styled(PrimitiveStyle::with_fill(Rgb565::BLACK))
+        .draw(&mut lcd)
+        .unwrap();
+        
+        if(bool_drawbg){
+
+        Image::new(&raw_image, Point::new(0, 0))
+            .draw(&mut lcd)
+            .unwrap();
+        }
+        bool_updatebg=false;
+        }
+
         Text::new(
             digit[(((pstate_bool as usize) / 1) % 10)],
             Point::new(40, 50),
