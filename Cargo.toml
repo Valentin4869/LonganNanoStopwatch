@@ -7,7 +7,7 @@ categories = ["embedded", "hardware-support", "no-std"]
 description = "Board support package for the Longan Nano board"
 keywords = ["riscv", "gd32", "bsp"]
 license = "ISC"
-edition = "2022"
+edition = "2018"
 
 [package.metadata.docs.rs]
 features = ['lcd']
@@ -32,15 +32,5 @@ ushell = "0.3.5"
 lcd = ["st7735-lcd"]
 sdcard = ["embedded-sdmmc"]
 
-[[example]]
-name = "display"
-required-features = ["lcd"]
 
-[[example]]
-name = "ferris"
-required-features = ["lcd"]
-
-[[example]]
-name = "sdcard_test"
-required-features = ["sdcard"]
 
