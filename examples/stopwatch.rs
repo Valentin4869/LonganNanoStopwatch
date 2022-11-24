@@ -107,21 +107,19 @@ fn main() -> ! {
     let mut ip = 0;
     let mut adelay = 0;
     let mut hdelay:i32=0;
-    let mut i_hd=2;
+    let mut i_hd=1;
     let mut bool_drawbg:bool=false;
     let mut bool_updatebg:bool=false;
     //Draw background
     
  
     
-
+    Rectangle::new(Point::new(0, 0), Size::new(width as u32, height as u32))
+    .into_styled(PrimitiveStyle::with_fill(Rgb565::BLACK))
+    .draw(&mut lcd)
+    .unwrap();
     let raw_image: ImageRaw<Rgb565, LittleEndian> = ImageRaw::new(&FERRIS, 86);
 
-   // if(bool_drawbg){
-    //Image::new(&raw_image, Point::new(0, 0))
-     //   .draw(&mut lcd)
-      //  .unwrap();
-    //}
 
     let mut i1 = 0;
 
@@ -171,18 +169,18 @@ fn main() -> ! {
 
                 //quickpress check
                 if  hdelay>0{ 
-                    
-                    if i_hd<=0{
-                    
-                    
+                    if i_hd>0{
+                        i_hd-=1;
+                    }
+                    else{
                         bool_drawbg=!bool_drawbg;
                         bool_updatebg=true;
-                        i_hd=2;
+                        i_hd=1;
                     }  
                     
                 }
-                hdelay=68;
-                i_hd-=1;
+
+                hdelay=70;
                 adelay=0;
                 
             }
@@ -202,7 +200,7 @@ fn main() -> ! {
                 
                 }
                 else {
-                    i_hd=2;
+                    i_hd=1;
                 }
             }        //3button check
 
