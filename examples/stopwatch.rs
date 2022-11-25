@@ -32,6 +32,7 @@ static mut G_START: bool = false;
 static mut G_C2: usize = 0;
 
 const FERRIS: &[u8] = include_bytes!("ferris.raw");
+const FERRIS2: &[u8] = include_bytes!("finalform.raw");
 
 #[entry]
 fn main() -> ! {
@@ -108,8 +109,8 @@ fn main() -> ! {
     let mut adelay = 0;
     let mut hdelay:i32=0;
     let mut i_hd=1;
-    let mut bool_drawbg:bool=false;
-    let mut bool_updatebg:bool=false;
+    let mut bool_drawbg:bool=true;
+    let mut bool_updatebg:bool=true;
     //Draw background
     
  
@@ -119,7 +120,8 @@ fn main() -> ! {
     .draw(&mut lcd)
     .unwrap();
     let raw_image: ImageRaw<Rgb565, LittleEndian> = ImageRaw::new(&FERRIS, 86);
-
+    let raw_image2: ImageRaw<Rgb565, LittleEndian> = ImageRaw::new(&FERRIS2, 106);
+    
 
     let mut i1 = 0;
 
@@ -220,6 +222,11 @@ fn main() -> ! {
         if(bool_drawbg){
 
         Image::new(&raw_image, Point::new(0, 0))
+            .draw(&mut lcd)
+            .unwrap();
+        }
+        else{
+            Image::new(&raw_image2, Point::new(0, 0))
             .draw(&mut lcd)
             .unwrap();
         }
