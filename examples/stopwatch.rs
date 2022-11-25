@@ -182,7 +182,7 @@ fn main() -> ! {
                     
                 }
 
-                hdelay=70;
+                hdelay=150;
                 adelay=0;
                 
             }
@@ -233,13 +233,13 @@ fn main() -> ! {
         bool_updatebg=false;
         }
 
-        Text::new(
-            digit[(((pstate_bool as usize) / 1) % 10)],
-            Point::new(40, 50),
-            style,
-        )
-        .draw(&mut lcd)
-        .unwrap();
+       // Text::new(
+       //     digit[(((pstate_bool as usize) / 1) % 10)],
+       //     Point::new(40, 50),
+       //     style,
+       // )
+       // .draw(&mut lcd)
+       // .unwrap();
 
         Text::new(
             digit[((local_c2) / 60 / 60 % 24) % 10],
