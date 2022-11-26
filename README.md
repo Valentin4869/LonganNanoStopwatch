@@ -1,4 +1,4 @@
-LONGAN NANO Stopwatch
+LONGAN NANO Stopwatch in Rust
 
 Features:
 .
