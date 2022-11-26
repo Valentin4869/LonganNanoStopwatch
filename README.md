@@ -1,4 +1,4 @@
-LONGANNANO Stopwatch
+LONGAN NANO Stopwatch
 
 Features:
 .
